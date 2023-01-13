@@ -1,0 +1,22 @@
+version: '3'
+services:
+  postgres:
+    image: "postgres:14.5"
+    ports:
+      - "8001:5432"
+    environment:
+      POSTGRES_USER: "test"
+      POSTGRES_PASSWORD: "test"
+      POSTGRES_DB: "test"
+
+  node:
+    build: .
+    command: npm run start
+    volumes:
+      - .:/app/
+      - /app/node_modules
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+  
